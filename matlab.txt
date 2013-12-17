@@ -1,0 +1,28 @@
+clc
+clear all
+close all
+img = imread('office_4.jpg');
+SE = strel('Disk',18);
+
+img_soft = imadjust(img,[0.20 0.00 0.00; 0.70 1.00 1.00],[]);
+img_hard = imsubtract(imadd(img,imtophat(img,SE)),imbothat(img,SE));
+img_dark = imadjust(img,[0.3; 0.75],[], 0.8);
+img_light = imadjust(img,[0.05; 0.45],[],1.4);
+img_reverse =  imadjust(img,[0.30; 0.85],[0.90; 0.00], 0.90);
+img_vintage = imadjust(img,[.2 .3 0; .6 .7 1],[]);
+img_red = imadjust(img,[.02 .2 0; .3 .6 1],[]);
+img_purple = imadjust(img,[.02 .2 0; .6 .8 0.3],[]);
+img_green = imadjust(img,[.02 .2 0; .6 .8 0.3],[0.9; 0.09],0.9);
+img_blue = imadjust(img,[.02 .2 0.7; .1 .7 0.8],[0.9; 0.1],0.8);
+%img_black = imadjust(img,[.05 .3 0.15; .7 .7 0.35],[0.8; 0.1],0.9);
+
+%A = [img img_soft img_hard img_vintage; img img_dark img_light img_reverse; img_purple img_green img_blue img_red;];
+B = [img img_soft img_hard img_dark img_light;];
+% C = [img_black img_green;];
+% D = [img img_purple img_green img_blue img_red];
+%imshow(img_black);
+
+%figure;imshow(A);
+ figure;imshow(B);
+% figure;imshow(C);
+% figure;imshow(D);
